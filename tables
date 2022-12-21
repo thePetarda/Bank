@@ -36,7 +36,7 @@ CREATE TABLE Wlasnosc
 
 CREATE TABLE Historia
 (
-    nr_konto NUMBER(4) NOT NULL REFERENCES Konto,
+    nr_konto NUMBER(4) PRIMARY KEY REFERENCES Konto,
     typ_operacji VARCHAR2(40) NOT NULL,
 --     CONSTRAINT operacja_check CHECK  typ_operacji in (‘Wpłata’, ‘Wypłata’)
     kwota NUMBER(9) NOT NULL,
@@ -45,6 +45,7 @@ CREATE TABLE Historia
 
 CREATE TABLE Przelew_cykliczny
 (
+    id NUMBER(4) PRIMARY KEY,
     nr_nadawcy NUMBER(4) NOT NULL REFERENCES Konto,
     nr_odbiorcy NUMBER(4) NOT NULL REFERENCES Konto,
     kwota NUMBER(9) NOT NULL,
@@ -54,11 +55,13 @@ CREATE TABLE Przelew_cykliczny
 
 CREATE TABLE Skarbnica
 (
+    id NUMBER(4) PRIMARY KEY,
     kwota NUMBER(9) NOT NULL
 );
 
 CREATE TABLE Kredyt
 (
+    id NUMBER(4) PRIMARY KEY,
     nr_konta NUMBER(4) NOT NULL REFERENCES Konto,
     skarbiec NUMBER(4) NOT NULL REFERENCES Skarbnica,
     oprocentowanie NUMBER(4) NOT NULL,
@@ -72,7 +75,8 @@ CREATE TABLE Powiadomienie
     id_klient NUMBER(4) NOT NULL REFERENCES Klient,
     temat VARCHAR2(40) NOT NULL,
     tresc VARCHAR2(40) NOT NULL,
-    data DATE NOT NULL
+    data DATE NOT NULL,
+    id NUMBER(4) PRIMARY KEY
 );
 
 CREATE TABLE Wniosek_o_zmiane
@@ -82,6 +86,7 @@ CREATE TABLE Wniosek_o_zmiane
     nazwa_pola VARCHAR2(40) NOT NULL,
 --     dodać check
     nowa_wartosc VARCHAR2(40) NOT NULL,
+    id NUMBER(4) PRIMARY KEY
 );
 
 CREATE TABLE Wniosek_o_kredyt
@@ -90,5 +95,6 @@ CREATE TABLE Wniosek_o_kredyt
     id_pracownik NUMBER(4) NOT NULL REFERENCES Pracownik,
     kwota NUMBER(9) NOT NULL,
     oprocentowanie NUMBER(4) NOT NULL,
-    czy_zmienne NUMBER(1) NOT NULL
+    czy_zmienne NUMBER(1) NOT NULL,
+    id NUMBER(4) PRIMARY KEY
 );
