@@ -1,16 +1,15 @@
-DROP TABLE Użytkownik;
-DROP TABLE Klient;
-DROP TABLE Pracownik;
-DROP TABLE Konto;
-DROP TABLE Wlasnosc;
-DROP TABLE Historia;
-DROP TABLE Przelew_cykliczny;
-DROP TABLE Skarbnica;
-DROP TABLE Kredyt;
-DROP TABLE Powiadomienie;
 DROP TABLE Wniosek_o_kredyt;
 DROP TABLE Wniosek_o_zmiane;
-
+DROP TABLE Powiadomienie;
+DROP TABLE Kredyt;
+DROP TABLE Skarbnica;
+DROP TABLE Przelew_cykliczny;
+DROP TABLE Historia;
+DROP TABLE Wlasnosc;
+DROP TABLE Konto;
+DROP TABLE Pracownik;
+DROP TABLE Klient;
+DROP TABLE Użytkownik;
 
 CREATE TABLE Użytkownik
 (
@@ -112,4 +111,3 @@ CREATE TABLE Wniosek_o_kredyt
     czy_zmienne NUMBER(1) NOT NULL,
     id NUMBER(4) PRIMARY KEY
 );
-
