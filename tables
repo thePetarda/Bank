@@ -50,7 +50,8 @@ CREATE TABLE Wlasnosc
 
 CREATE TABLE Historia
 (
-    nr_konto NUMBER(4) PRIMARY KEY REFERENCES Konto,
+    id NUMBER(4) PRIMARY KEY,
+    nr_konto NUMBER(4) REFERENCES Konto,
     typ_operacji VARCHAR2(40) NOT NULL,
     kwota NUMBER(9) NOT NULL,
     data DATE NOT NULL,
@@ -72,7 +73,7 @@ CREATE TABLE Przelew_cykliczny
 CREATE TABLE Skarbnica
 (
     id NUMBER(4) PRIMARY KEY,
-    kwota NUMBER(9) NOT NULL
+    kwota NUMBER(12) NOT NULL
 );
 
 CREATE TABLE Kredyt
@@ -80,6 +81,7 @@ CREATE TABLE Kredyt
     id NUMBER(4) PRIMARY KEY,
     nr_konta NUMBER(4) NOT NULL REFERENCES Konto,
     skarbiec NUMBER(4) NOT NULL REFERENCES Skarbnica,
+    kwota_pozyczki NUMBER(7) NOT NULL,
     oprocentowanie NUMBER(4) NOT NULL,
     CONSTRAINT oprocentowanie_kredyt_check CHECK (oprocentowanie > 0),
     okres NUMBER(4) NOT NULL,
@@ -92,7 +94,7 @@ CREATE TABLE Powiadomienie
 (
     id_klient NUMBER(4) NOT NULL REFERENCES Klient,
     temat VARCHAR2(40) NOT NULL,
-    tresc VARCHAR2(40) NOT NULL,
+    tresc VARCHAR2(80) NOT NULL,
     data DATE NOT NULL,
     id NUMBER(4) PRIMARY KEY
 );
@@ -121,5 +123,28 @@ CREATE TABLE Wniosek_o_kredyt
 
 INSERT INTO Użytkownik (imie, nazwisko, haslo, mail, id) VALUES ('Kasia', 'Kowal', 'kasia123', 'kasia@mail', 0);
 INSERT INTO Użytkownik (imie, nazwisko, haslo, mail, id) VALUES ('Pawel', 'Pawlak', 'pawel123', 'pawel@mail', 1);
-INSERT INTO Klient (id, adres, numer_tel) VALUES (0, 'ulica', '123456789');
-INSERT INTO Klient (id, adres, numer_tel) VALUES (2, 'ulica', '123456789');
+INSERT INTO Użytkownik (imie, nazwisko, haslo, mail, id) VALUES ('Joanna', 'Koza', 'joanna123', 'joanna@mail', 2);
+INSERT INTO Użytkownik (imie, nazwisko, haslo, mail, id) VALUES ('Artur', 'Nowak', 'artur123', 'artur@mail', 3);
+INSERT INTO Klient (id, adres, numer_tel) VALUES (0, 'ulica1', '123456789');
+INSERT INTO Klient (id, adres, numer_tel) VALUES (1, 'ulica2', '123456699');
+INSERT INTO Pracownik (id, dzial) VALUES (2, 'Obslugi');
+INSERT INTO Pracownik (id, dzial) VALUES (3, 'Kredytu');
+INSERT INTO Konto (numer, waluta, stan) VALUES (1, 'PLN', 100000);
+INSERT INTO Konto (numer, waluta, stan) VALUES (2, 'USD', 20000);
+INSERT INTO Konto (numer, waluta, stan) VALUES (3, 'PLN', 2000);
+INSERT INTO Wlasnosc (id_wlasc, nr_konto) VALUES (0, 1);
+INSERT INTO Wlasnosc (id_wlasc, nr_konto) VALUES (0, 2);
+INSERT INTO Wlasnosc (id_wlasc, nr_konto) VALUES (1, 3);
+INSERT INTO Historia (id, nr_konto, typ_operacji, kwota, data) VALUES (1, 1, 'Wyplata', 1000, TO_DATE('17/12/2022', 'DD/MM/YYYY'));
+INSERT INTO Historia (id, nr_konto, typ_operacji, kwota, data) VALUES (2, 3, 'Wplata', 1000, TO_DATE('17/12/2022', 'DD/MM/YYYY'));
+INSERT INTO Historia (id, nr_konto, typ_operacji, kwota, data) VALUES (3, 2, 'Wyplata', 20000, TO_DATE('10/11/2022', 'DD/MM/YYYY'));
+INSERT INTO Historia (id, nr_konto, typ_operacji, kwota, data) VALUES (4, 1, 'Wyplata', 2000, TO_DATE('15/12/2022', 'DD/MM/YYYY'));
+INSERT INTO Historia (id, nr_konto, typ_operacji, kwota, data) VALUES (5, 3, 'Wyplata', 100, TO_DATE('20/12/2022', 'DD/MM/YYYY'));
+INSERT INTO Przelew_cykliczny (id, nr_nadawcy, nr_odbiorcy, kwota, okres, data) VALUES (1, 1, 3, 1000, 30, TO_DATE('17/12/2022', 'DD/MM/YYYY'));
+INSERT INTO Skarbnica (id, kwota) VALUES (0, 10000000);
+INSERT INTO Kredyt (id, nr_konta, skarbiec, kwota_pozyczki, oprocentowanie, okres, data, czy_zmienne) VALUES (1, 1, 0, 100000, 5, 30, TO_DATE('15/12/2022', 'DD/MM/YYYY'), 0);
+INSERT INTO Powiadomienie (id_klient, temat, tresc, data, id) VALUES (0, 'Nowe konto walutowe', 'Twoje konto walutowe w USD pomyslnie otwarte', TO_DATE('08/11/2022', 'DD/MM/YYYY'), 0);
+
+SELECT * from Historia WHERE nr_konto = 1;
+SELECT * from Klient;
+SELECT * from Pracownik, Użytkownik WHERE dzial = 'Obslugi' AND Użytkownik.id = Pracownik.id;
