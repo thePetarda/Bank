@@ -1,0 +1,94 @@
+CREATE TABLE Użytkownik
+(
+    imie VARCHAR2(40) NOT NULL,
+    nazwisko VARCHAR2(40) NOT NULL,
+    haslo VARCHAR2(40) NOT NULL,
+    mail VARCHAR2(40) NOT NULL,
+    id NUMBER(4) PRIMARY KEY
+);
+
+CREATE TABLE Klient
+(
+    id NUMBER(4) REFERENCES Użytkownik PRIMARY KEY,
+    adres VARCHAR2(40) NOT NULl,
+    numer_tel VARCHAR2(9) NOT NULL
+);
+
+CREATE TABLE Pracownik
+(
+    id NUMBER(4) REFERENCES Użytkownik PRIMARY KEY,
+    dzial VARCHAR2(40) NOT NULl
+);
+
+CREATE TABLE Konto
+(
+    numer NUMBER(4) PRIMARY KEY,
+    waluta VARCHAR2(40) NOT NULL,
+    stan NUMBER(9) NOT NULL
+);
+
+CREATE TABLE Wlasnosc
+(
+    id_wlasc NUMBER(4) NOT NULL REFERENCES Klient,
+    nr_konto NUMBER(4) NOT NULL REFERENCES Konto,
+    CONSTRAINT wlasnosc_pk PRIMARY KEY (id_wlasc, nr_konto)
+);
+
+CREATE TABLE Historia
+(
+    nr_konto NUMBER(4) NOT NULL REFERENCES Konto,
+    typ_operacji VARCHAR2(40) NOT NULL,
+--     CONSTRAINT operacja_check CHECK  typ_operacji in (‘Wpłata’, ‘Wypłata’)
+    kwota NUMBER(9) NOT NULL,
+    data DATE NOT NULL
+);
+
+CREATE TABLE Przelew_cykliczny
+(
+    nr_nadawcy NUMBER(4) NOT NULL REFERENCES Konto,
+    nr_odbiorcy NUMBER(4) NOT NULL REFERENCES Konto,
+    kwota NUMBER(9) NOT NULL,
+    okres NUMBER(4) NOT NULL,
+    data DATE NOT NULL
+);
+
+CREATE TABLE Skarbnica
+(
+    kwota NUMBER(9) NOT NULL
+);
+
+CREATE TABLE Kredyt
+(
+    nr_konta NUMBER(4) NOT NULL REFERENCES Konto,
+    skarbiec NUMBER(4) NOT NULL REFERENCES Skarbnica,
+    oprocentowanie NUMBER(4) NOT NULL,
+    okres NUMBER(4) NOT NULL,
+    data DATE NOT NULL,
+    czy_zmienne NUMBER(1) NOT NULL
+);
+
+CREATE TABLE Powiadomienie
+(
+    id_klient NUMBER(4) NOT NULL REFERENCES Klient,
+    temat VARCHAR2(40) NOT NULL,
+    tresc VARCHAR2(40) NOT NULL,
+    data DATE NOT NULL
+);
+
+CREATE TABLE Wniosek_o_zmiane
+(
+    id_klient NUMBER(4) NOT NULL REFERENCES Klient,
+    id_pracownik NUMBER(4) NOT NULL REFERENCES Pracownik,
+    nazwa_pola VARCHAR2(40) NOT NULL,
+--     dodać check
+    nowa_wartosc VARCHAR2(40) NOT NULL,
+);
+
+CREATE TABLE Wniosek_o_kredyt
+(
+    id_klient NUMBER(4) NOT NULL REFERENCES Klient,
+    id_pracownik NUMBER(4) NOT NULL REFERENCES Pracownik,
+    kwota NUMBER(9) NOT NULL,
+    oprocentowanie NUMBER(4) NOT NULL,
+    czy_zmienne NUMBER(1) NOT NULL
+);
