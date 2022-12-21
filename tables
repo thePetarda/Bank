@@ -118,3 +118,8 @@ CREATE TABLE Wniosek_o_kredyt
     czy_zmienne NUMBER(1) NOT NULL,
     id NUMBER(4) PRIMARY KEY
 );
+
+INSERT INTO Użytkownik (imie, nazwisko, haslo, mail, id) VALUES ('Kasia', 'Kowal', 'kasia123', 'kasia@mail', 0);
+INSERT INTO Użytkownik (imie, nazwisko, haslo, mail, id) VALUES ('Pawel', 'Pawlak', 'pawel123', 'pawel@mail', 1);
+INSERT INTO Klient (id, adres, numer_tel) VALUES (0, 'ulica', '123456789');
+INSERT INTO Klient (id, adres, numer_tel) VALUES (2, 'ulica', '123456789');
