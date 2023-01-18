@@ -9,9 +9,9 @@ DROP TABLE Wlasnosc;
 DROP TABLE Konto;
 DROP TABLE Pracownik;
 DROP TABLE Klient;
-DROP TABLE Użytkownik;
+DROP TABLE Uzytkownik;
 
-CREATE TABLE Użytkownik
+CREATE TABLE Uzytkownik
 (
     imie VARCHAR2(40) NOT NULL,
     nazwisko VARCHAR2(40) NOT NULL,
@@ -22,14 +22,14 @@ CREATE TABLE Użytkownik
 
 CREATE TABLE Klient
 (
-    id NUMBER(4) REFERENCES Użytkownik PRIMARY KEY,
+    id NUMBER(4) REFERENCES Uzytkownik PRIMARY KEY,
     adres VARCHAR2(40) NOT NULl,
     numer_tel VARCHAR2(9) NOT NULL
 );
 
 CREATE TABLE Pracownik
 (
-    id NUMBER(4) REFERENCES Użytkownik PRIMARY KEY,
+    id NUMBER(4) REFERENCES Uzytkownik PRIMARY KEY,
     dzial VARCHAR2(40) NOT NULl,
     CONSTRAINT dobry_dzial CHECK (dzial IN ('Obslugi', 'Kredytu'))
 );
@@ -121,10 +121,10 @@ CREATE TABLE Wniosek_o_kredyt
     id NUMBER(4) PRIMARY KEY
 );
 
-INSERT INTO Użytkownik (imie, nazwisko, haslo, mail, id) VALUES ('Kasia', 'Kowal', 'kasia123', 'kasia@mail', 0);
-INSERT INTO Użytkownik (imie, nazwisko, haslo, mail, id) VALUES ('Pawel', 'Pawlak', 'pawel123', 'pawel@mail', 1);
-INSERT INTO Użytkownik (imie, nazwisko, haslo, mail, id) VALUES ('Joanna', 'Koza', 'joanna123', 'joanna@mail', 2);
-INSERT INTO Użytkownik (imie, nazwisko, haslo, mail, id) VALUES ('Artur', 'Nowak', 'artur123', 'artur@mail', 3);
+INSERT INTO Uzytkownik (imie, nazwisko, haslo, mail, id) VALUES ('Kasia', 'Kowal', 'kasia123', 'kasia@mail', 0);
+INSERT INTO Uzytkownik (imie, nazwisko, haslo, mail, id) VALUES ('Pawel', 'Pawlak', 'pawel123', 'pawel@mail', 1);
+INSERT INTO Uzytkownik (imie, nazwisko, haslo, mail, id) VALUES ('Joanna', 'Koza', 'joanna123', 'joanna@mail', 2);
+INSERT INTO Uzytkownik (imie, nazwisko, haslo, mail, id) VALUES ('Artur', 'Nowak', 'artur123', 'artur@mail', 3);
 INSERT INTO Klient (id, adres, numer_tel) VALUES (0, 'ulica1', '123456789');
 INSERT INTO Klient (id, adres, numer_tel) VALUES (1, 'ulica2', '123456699');
 INSERT INTO Pracownik (id, dzial) VALUES (2, 'Obslugi');
