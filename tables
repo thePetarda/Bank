@@ -70,24 +70,20 @@ CREATE TABLE Przelew_cykliczny
     data DATE NOT NULL
 );
 
-CREATE TABLE Skarbnica
-(
-    id NUMBER(4) PRIMARY KEY,
-    kwota NUMBER(12) NOT NULL
-);
-
 CREATE TABLE Kredyt
 (
     id NUMBER(4) PRIMARY KEY,
     nr_konta NUMBER(4) NOT NULL REFERENCES Konto,
-    skarbiec NUMBER(4) NOT NULL REFERENCES Skarbnica,
+    id_pracownik NUMBER(4) NOT NULL REFERENCES Pracownik,
     kwota_pozyczki NUMBER(7) NOT NULL,
     oprocentowanie NUMBER(4) NOT NULL,
     CONSTRAINT oprocentowanie_kredyt_check CHECK (oprocentowanie > 0),
     okres NUMBER(4) NOT NULL,
     CONSTRAINT okres_kredyt_check CHECK (okres > 0),
     data DATE NOT NULL,
-    czy_zmienne NUMBER(1) NOT NULL
+    czy_zmienne NUMBER(1) NOT NULL,
+    stan VARCHAR2(40) NOT NULL,
+    CONSTRAINT stan_kredyt_check CHECK (stan IN ('niezaakceptowany', 'spłacony', 'w trakcie'))
 );
 
 CREATE TABLE Powiadomienie
@@ -106,18 +102,6 @@ CREATE TABLE Wniosek_o_zmiane
     nazwa_pola VARCHAR2(40) NOT NULL,
     CONSTRAINT dobre_pole CHECK (nazwa_pola IN ('imie', 'nazwisko', 'haslo', 'mail', 'adres', 'numer_tel')),
     nowa_wartosc VARCHAR2(40) NOT NULL,
-    id NUMBER(4) PRIMARY KEY
-);
-
-CREATE TABLE Wniosek_o_kredyt
-(
-    id_klient NUMBER(4) NOT NULL REFERENCES Klient,
-    id_pracownik NUMBER(4) NOT NULL REFERENCES Pracownik,
-    kwota NUMBER(9) NOT NULL,
-    CONSTRAINT kwota_wniosek_check CHECK (kwota > 0),
-    oprocentowanie NUMBER(4) NOT NULL,
-    CONSTRAINT oprocentowanie_wniosek_check CHECK (oprocentowanie > 0),
-    czy_zmienne NUMBER(1) NOT NULL,
     id NUMBER(4) PRIMARY KEY
 );
 
@@ -142,7 +126,7 @@ INSERT INTO Historia (id, nr_konto, typ_operacji, kwota, data) VALUES (4, 1, 'Wy
 INSERT INTO Historia (id, nr_konto, typ_operacji, kwota, data) VALUES (5, 3, 'Wyplata', 100, TO_DATE('20/12/2022', 'DD/MM/YYYY'));
 INSERT INTO Przelew_cykliczny (id, nr_nadawcy, nr_odbiorcy, kwota, okres, data) VALUES (1, 1, 3, 1000, 30, TO_DATE('17/12/2022', 'DD/MM/YYYY'));
 INSERT INTO Skarbnica (id, kwota) VALUES (0, 10000000);
-INSERT INTO Kredyt (id, nr_konta, skarbiec, kwota_pozyczki, oprocentowanie, okres, data, czy_zmienne) VALUES (1, 1, 0, 100000, 5, 30, TO_DATE('15/12/2022', 'DD/MM/YYYY'), 0);
+INSERT INTO Kredyt (id, nr_konta, id_pracownik, skarbiec, kwota_pozyczki, oprocentowanie, okres, data, czy_zmienne, stan) VALUES (1, 1, 2, 0, 100000, 5, 30, TO_DATE('15/12/2022', 'DD/MM/YYYY'), 0, 'niezaakceptowany');
 INSERT INTO Powiadomienie (id_klient, temat, tresc, data, id) VALUES (0, 'Nowe konto walutowe', 'Twoje konto walutowe w USD pomyslnie otwarte', TO_DATE('08/11/2022', 'DD/MM/YYYY'), 0);
 
 SELECT * from Historia WHERE nr_konto = 1;
