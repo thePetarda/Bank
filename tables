@@ -1,8 +1,6 @@
-DROP TABLE Wniosek_o_kredyt;
 DROP TABLE Wniosek_o_zmiane;
 DROP TABLE Powiadomienie;
 DROP TABLE Kredyt;
-DROP TABLE Skarbnica;
 DROP TABLE Przelew_cykliczny;
 DROP TABLE Historia;
 DROP TABLE Wlasnosc;
@@ -125,10 +123,10 @@ INSERT INTO Historia (id, nr_konto, typ_operacji, kwota, data) VALUES (3, 2, 'Wy
 INSERT INTO Historia (id, nr_konto, typ_operacji, kwota, data) VALUES (4, 1, 'Wyplata', 2000, TO_DATE('15/12/2022', 'DD/MM/YYYY'));
 INSERT INTO Historia (id, nr_konto, typ_operacji, kwota, data) VALUES (5, 3, 'Wyplata', 100, TO_DATE('20/12/2022', 'DD/MM/YYYY'));
 INSERT INTO Przelew_cykliczny (id, nr_nadawcy, nr_odbiorcy, kwota, okres, data) VALUES (1, 1, 3, 1000, 30, TO_DATE('17/12/2022', 'DD/MM/YYYY'));
-INSERT INTO Skarbnica (id, kwota) VALUES (0, 10000000);
-INSERT INTO Kredyt (id, nr_konta, id_pracownik, skarbiec, kwota_pozyczki, oprocentowanie, okres, data, czy_zmienne, stan) VALUES (1, 1, 2, 0, 100000, 5, 30, TO_DATE('15/12/2022', 'DD/MM/YYYY'), 0, 'niezaakceptowany');
+INSERT INTO Kredyt (id, nr_konta, id_pracownik, kwota_pozyczki, oprocentowanie, okres, data, czy_zmienne, stan)
+    VALUES (1, 1, 2, 100000, 5, 30, TO_DATE('15/12/2022', 'DD/MM/YYYY'), 0, 'niezaakceptowany');
 INSERT INTO Powiadomienie (id_klient, temat, tresc, data, id) VALUES (0, 'Nowe konto walutowe', 'Twoje konto walutowe w USD pomyslnie otwarte', TO_DATE('08/11/2022', 'DD/MM/YYYY'), 0);
 
-SELECT * from Historia WHERE nr_konto = 1;
-SELECT * from Klient;
-SELECT * from Pracownik, Użytkownik WHERE dzial = 'Obslugi' AND Użytkownik.id = Pracownik.id;
+-- SELECT * from Historia WHERE nr_konto = 1;
+-- SELECT * from Klient;
+-- SELECT * from Pracownik, Użytkownik WHERE dzial = 'Obslugi' AND Użytkownik.id = Pracownik.id;
