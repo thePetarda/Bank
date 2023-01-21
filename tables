@@ -1,5 +1,6 @@
 DROP TABLE Wniosek_o_zmiane;
 DROP TABLE Powiadomienie;
+DROP TABLE Historia_kredyt;
 DROP TABLE Kredyt;
 DROP TABLE Przelew_cykliczny;
 DROP TABLE Historia;
@@ -74,6 +75,7 @@ CREATE TABLE Kredyt
     nr_konta NUMBER(4) NOT NULL REFERENCES Konto,
     id_pracownik NUMBER(4) NOT NULL REFERENCES Pracownik,
     kwota_pozyczki NUMBER(7) NOT NULL,
+    kwota_splacona NUMBER(7) NOT NULL,
     oprocentowanie NUMBER(4) NOT NULL,
     CONSTRAINT oprocentowanie_kredyt_check CHECK (oprocentowanie > 0),
     okres NUMBER(4) NOT NULL,
@@ -81,8 +83,19 @@ CREATE TABLE Kredyt
     data DATE NOT NULL,
     czy_zmienne NUMBER(1) NOT NULL,
     stan VARCHAR2(40) NOT NULL,
-    CONSTRAINT stan_kredyt_check CHECK (stan IN ('niezaakceptowany', 'spłacony', 'w trakcie'))
+    CONSTRAINT stan_kredyt_check CHECK (stan IN ('nierozpatrzony', 'spłacony', 'w trakcie', 'odrzucony'))
 );
+
+CREATE TABLE Historia_kredyt
+(
+    id NUMBER(4) PRIMARY KEY,
+    nr_kredyt NUMBER(4) NOT NULL REFERENCES Kredyt,
+    typ_operacji VARCHAR2(40) NOT NULL,
+    kwota NUMBER(9) NOT NULL,
+    data DATE NOT NULL,
+    CONSTRAINT wplata_check CHECK (typ_operacji IN ('Wplata', 'Nadplata'))
+);
+
 
 CREATE TABLE Powiadomienie
 (
@@ -96,7 +109,6 @@ CREATE TABLE Powiadomienie
 CREATE TABLE Wniosek_o_zmiane
 (
     id_klient NUMBER(4) NOT NULL REFERENCES Klient,
-    id_pracownik NUMBER(4) NOT NULL REFERENCES Pracownik,
     nazwa_pola VARCHAR2(40) NOT NULL,
     CONSTRAINT dobre_pole CHECK (nazwa_pola IN ('imie', 'nazwisko', 'haslo', 'mail', 'adres', 'numer_tel')),
     nowa_wartosc VARCHAR2(40) NOT NULL,
@@ -123,9 +135,11 @@ INSERT INTO Historia (id, nr_konto, typ_operacji, kwota, data) VALUES (3, 2, 'Wy
 INSERT INTO Historia (id, nr_konto, typ_operacji, kwota, data) VALUES (4, 1, 'Wyplata', 2000, TO_DATE('15/12/2022', 'DD/MM/YYYY'));
 INSERT INTO Historia (id, nr_konto, typ_operacji, kwota, data) VALUES (5, 3, 'Wyplata', 100, TO_DATE('20/12/2022', 'DD/MM/YYYY'));
 INSERT INTO Przelew_cykliczny (id, nr_nadawcy, nr_odbiorcy, kwota, okres, data) VALUES (1, 1, 3, 1000, 30, TO_DATE('17/12/2022', 'DD/MM/YYYY'));
-INSERT INTO Kredyt (id, nr_konta, id_pracownik, kwota_pozyczki, oprocentowanie, okres, data, czy_zmienne, stan)
-    VALUES (1, 1, 2, 100000, 5, 30, TO_DATE('15/12/2022', 'DD/MM/YYYY'), 0, 'niezaakceptowany');
+INSERT INTO Kredyt (id, nr_konta, id_pracownik, kwota_pozyczki, kwota_splacona, oprocentowanie, okres, data, czy_zmienne, stan)
+    VALUES (0, 1, 2, 100000, 100, 5, 30, TO_DATE('15/12/2022', 'DD/MM/YYYY'), 0, 'nierozpatrzony');
 INSERT INTO Powiadomienie (id_klient, temat, tresc, data, id) VALUES (0, 'Nowe konto walutowe', 'Twoje konto walutowe w USD pomyslnie otwarte', TO_DATE('08/11/2022', 'DD/MM/YYYY'), 0);
+
+SELECT * FROM Kredyt JOIN Konto ON konto.numer = kredyt.nr_konta JOIN wlasnosc ON wlasnosc.nr_konto = konto.numer WHERE id_wlasc = 0;
 
 -- SELECT * from Historia WHERE nr_konto = 1;
 -- SELECT * from Klient;
