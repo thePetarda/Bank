@@ -131,6 +131,12 @@ INSERT INTO Kredyt (id, nr_konta, id_pracownik, kwota_pozyczki, kwota_splacona, 
     VALUES (1, 2, 2, 20000, 2500, 10, 45, TO_DATE('27/01/2023', 'DD/MM/YYYY'), 0, 'w trakcie', 'malejace', 2493, 1);
 INSERT INTO Kredyt (id, nr_konta, id_pracownik, kwota_pozyczki, kwota_splacona, oprocentowanie, okres, data, czy_zmienne, stan, raty, kolejna_rata, ile_rat_zaplaconych)
     VALUES (2, 3, 2, 500000, 83333, 15, 30, TO_DATE('28/01/2023', 'DD/MM/YYYY'), 1, 'w trakcie', 'malejace', 83214, 1);
+INSERT INTO Historia_kredyt (id, nr_kredyt, typ_operacji, kwota, data)
+    VALUES (0, 0, 'Wplata', 21, TO_DATE('25/01/2023', 'DD/MM/YYYY'));
+INSERT INTO Historia_kredyt (id, nr_kredyt, typ_operacji, kwota, data)
+    VALUES (1, 1, 'Wplata', 2500, TO_DATE('25/01/2023', 'DD/MM/YYYY'));
+INSERT INTO Historia_kredyt (id, nr_kredyt, typ_operacji, kwota, data)
+    VALUES (2, 2, 'Wplata', 83333, TO_DATE('25/01/2023', 'DD/MM/YYYY'));
 -- INSERT INTO Powiadomienie (id_klient, temat, tresc, data, id) VALUES (0, 'Nowe konto walutowe', 'Twoje konto walutowe w USD pomyslnie otwarte', TO_DATE('08/11/2022', 'DD/MM/YYYY'), 0);
 
 -- SELECT * FROM Kredyt JOIN Konto ON konto.numer = kredyt.nr_konta JOIN wlasnosc ON wlasnosc.nr_konto = konto.numer WHERE id_wlasc = 0;
