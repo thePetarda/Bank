@@ -106,10 +106,10 @@ CREATE TABLE Wniosek_o_zmiane
     id NUMBER(4) PRIMARY KEY
 );
 
-INSERT INTO Uzytkownik (imie, nazwisko, haslo, mail, id) VALUES ('Kasia', 'Kowal', 'kasia123', 'tomasz.pniewski7@gmail.com', 0);
-INSERT INTO Uzytkownik (imie, nazwisko, haslo, mail, id) VALUES ('Pawel', 'Pawlak', 'pawel123', 'pawel@mail', 1);
-INSERT INTO Uzytkownik (imie, nazwisko, haslo, mail, id) VALUES ('Joanna', 'Koza', 'joanna123', 'joanna@mail', 2);
-INSERT INTO Uzytkownik (imie, nazwisko, haslo, mail, id) VALUES ('Artur', 'Nowak', 'artur123', 'artur@mail', 3);
+INSERT INTO Uzytkownik (imie, nazwisko, haslo, mail, id) VALUES ('Kasia', 'Kowal', 'kasia123', 'kowalkatarzyna809@gmail.com', 0);
+INSERT INTO Uzytkownik (imie, nazwisko, haslo, mail, id) VALUES ('Pawel', 'Pawlak', 'pawel123', 'kowalkatarzyna809@gmail.com', 1);
+INSERT INTO Uzytkownik (imie, nazwisko, haslo, mail, id) VALUES ('Joanna', 'Koza', 'joanna123', 'kowalkatarzyna809@gmail.com', 2);
+INSERT INTO Uzytkownik (imie, nazwisko, haslo, mail, id) VALUES ('Artur', 'Nowak', 'artur123', 'kowalkatarzyna809@gmail.com', 3);
 INSERT INTO Klient (id, adres, numer_tel) VALUES (0, 'ulica1', '123456789');
 INSERT INTO Klient (id, adres, numer_tel) VALUES (1, 'ulica2', '123456699');
 INSERT INTO Pracownik (id, dzial) VALUES (2, 'Obslugi');
